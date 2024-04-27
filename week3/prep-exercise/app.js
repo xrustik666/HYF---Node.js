@@ -1,12 +1,27 @@
-import express from "express";
-// Use below import statement for importing middlewares from users.js for your routes
-// import { ....... } from "./users.js";
+import express from 'express';
+import { hash, compare } from 'bcrypt';
+import { register, login, profile, logout } from './users.js';
 
-let app = express();
+const app = express();
+const PORT = 3000;
 
 app.use(express.json());
-// Create routes here, e.g. app.post("/register", .......)
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+// DEFAULT endpoint
+app.get('/', (req, res) => {
+  res.send('Hello, world');
 });
+
+// REGISTRATION endpoint
+app.post('/register', register);
+
+// LOGIN endpoint
+app.post('/login', login);
+
+// PROFILE endpoint
+app.get('/profile', profile);
+
+// LOGOUT endpoint
+app.post('/logout', logout);
+
+app.listen(PORT);
